@@ -1,6 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ContactForm from '../components/ContactForm.astro';
 import SocialFeed from '../components/SocialFeed.astro';
 import { getCollection } from 'astro:content';
 
@@ -8,7 +7,7 @@ const settingsEntries = await getCollection('site-settings');
 const settings = settingsEntries[0].data;
 ---
 
-<Layout title="Contact" description="Request an investigation or get in touch with Pharos Paranormal Society.">
+<Layout title="Contact" description="Get in touch with Pharos Paranormal Society.">
   <section class="border-b border-ink/10 bg-ink text-paper">
     <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
       <p class="font-heading text-sm uppercase tracking-[0.3em] text-cream">Contact</p>
@@ -18,28 +17,25 @@ const settings = settingsEntries[0].data;
   </section>
 
   <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-    <div class="grid gap-12 lg:grid-cols-[1.2fr,1fr]">
-      <div>
-        <h2 class="font-heading text-2xl">Send a message</h2>
-        <div class="mt-6">
-          <ContactForm />
-        </div>
+    <div class="grid gap-12 lg:grid-cols-2">
+      <div class="flex flex-col items-start border border-ink/10 bg-cream/30 p-8">
+        <p class="font-heading text-sm uppercase tracking-widest text-ink/60">Get in touch</p>
+        <p class="mt-3 text-ink/80">
+          The fastest way to reach us is by email. Tell us about your location and what you've been experiencing, and we'll follow up within a few days.
+        </p>
+        <a
+          href={`mailto:${settings.email}`}
+          class="font-heading mt-6 inline-block bg-ink px-8 py-3 text-sm uppercase tracking-wide text-paper transition-colors hover:bg-ink/80"
+        >
+          {settings.email}
+        </a>
+        <p class="mt-6 text-sm text-ink/60">{settings.address}</p>
       </div>
 
-      <div class="space-y-10">
-        <div class="border border-ink/10 bg-cream/30 p-6">
-          <p class="font-heading text-sm uppercase tracking-widest text-ink/60">Direct contact</p>
-          <ul class="mt-4 space-y-2 text-sm text-ink/80">
-            <li><a href={`mailto:${settings.email}`} class="underline decoration-cream decoration-2 underline-offset-4">{settings.email}</a></li>
-            <li>{settings.address}</li>
-          </ul>
-        </div>
-
-        <div>
-          <p class="font-heading text-sm uppercase tracking-widest text-ink/60">Follow us</p>
-          <div class="mt-4">
-            <SocialFeed socialLinks={settings.socialLinks} />
-          </div>
+      <div>
+        <p class="font-heading text-sm uppercase tracking-widest text-ink/60">Follow us</p>
+        <div class="mt-4">
+          <SocialFeed socialLinks={settings.socialLinks} />
         </div>
       </div>
     </div>

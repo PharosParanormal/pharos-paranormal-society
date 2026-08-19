@@ -76,9 +76,9 @@ The Decap CMS config (`public/admin/config.yml`) mirrors this schema field-for-f
 
 `src/components/SocialFeed.astro` reads `site-settings.socialLinks` and renders a clean icon grid linking out to whichever platforms are filled in. True embedded feeds (Instagram/TikTok/Facebook widgets) require per-platform developer API keys, which this project deliberately avoids to keep it free and dependency-free — see the comment at the top of that component for where to wire embeds in later.
 
-### Contact form
+### Contact
 
-Uses [Netlify Forms](https://docs.netlify.com/forms/setup/) — no backend or API key needed. Netlify detects the form automatically from the static HTML at build time (`src/components/ContactForm.astro`), and submissions show up under **Site configuration → Forms** in the Netlify dashboard. You can turn on email notifications for new submissions there.
+The `/contact` page points visitors straight at a `mailto:` link built from `site-settings.email`, rather than an on-site form — simplest possible setup, no Netlify Forms configuration needed.
 
 ### Sample content
 
