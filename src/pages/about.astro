@@ -3,10 +3,23 @@ import Layout from '../layouts/Layout.astro';
 import TeamCard from '../components/TeamCard.astro';
 import SocialFeed from '../components/SocialFeed.astro';
 import { getCollection } from 'astro:content';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const team = (await getCollection('team')).sort((a, b) => a.data.order - b.data.order);
 const settingsEntries = await getCollection('site-settings');
 const settings = settingsEntries[0].data;
+
+const galleryDir = path.join(process.cwd(), 'public/images/gallery');
+let galleryImages: string[] = [];
+try {
+  galleryImages = fs
+    .readdirSync(galleryDir)
+    .filter((f) => /\.(jpe?g|png|webp)$/i.test(f))
+    .sort();
+} catch {
+  galleryImages = [];
+}
 ---
 
 <Layout title="About" description="Meet the Pharos Paranormal Society team.">
@@ -32,6 +45,25 @@ const settings = settingsEntries[0].data;
     <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {team.map((member) => <TeamCard member={member} />)}
     </div>
+  </section>
+
+  <section class="border-t border-ink/10 mx-auto max-w-6xl px-4 py-20 sm:px-6">
+    <p class="font-heading text-sm uppercase tracking-widest text-ink/50">In the field</p>
+    <h2 class="font-heading mt-3 text-3xl">Working with our equipment</h2>
+    {galleryImages.length > 0 ? (
+      <div class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3">
+        {galleryImages.map((file) => (
+          <img
+            src={`/images/gallery/${file}`}
+            alt="Pharos Paranormal Society team member working with investigation equipment"
+            class="aspect-square w-full border border-ink/10 object-cover"
+            loading="lazy"
+          />
+        ))}
+      </div>
+    ) : (
+      <p class="mt-6 text-ink/60">More photos from the field coming soon.</p>
+    )}
   </section>
 
   <section class="border-t border-ink/10 bg-cream/20">
