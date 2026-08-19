@@ -1,0 +1,116 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+import BlogCard from '../components/BlogCard.astro';
+import SocialFeed from '../components/SocialFeed.astro';
+import { getCollection } from 'astro:content';
+
+const settingsEntries = await getCollection('site-settings');
+const settings = settingsEntries[0].data;
+
+const allTestimonials = await getCollection('testimonials');
+const featuredTestimonials = allTestimonials
+  .filter((t) => t.data.featured)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const allPosts = await getCollection('blog');
+const latestPost = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())[0];
+---
+
+<Layout title="Home">
+  <section class="relative overflow-hidden border-b border-ink/10 bg-ink text-paper">
+    <img
+      src="/images/team/Group.jpg"
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 h-full w-full object-cover object-[75%_center] opacity-60"
+    />
+    <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/40"></div>
+    <div class="relative mx-auto flex max-w-6xl flex-col items-start px-4 py-24 sm:px-6 sm:py-32">
+      <p class="font-heading text-sm uppercase tracking-[0.3em] text-cream">Paranormal Investigation</p>
+      <h1 class="font-heading mt-6 max-w-3xl text-4xl leading-tight sm:text-6xl">
+        A light in the dark, when you need answers most.
+      </h1>
+      <p class="mt-6 max-w-xl text-base text-white/70 sm:text-lg">
+        Pharos Paranormal Society investigates the unexplained with care, curiosity, and rigorous evidence review — guiding you toward understanding, not sensationalism.
+      </p>
+      <a
+        href={`mailto:${settings.email}`}
+        class="font-heading mt-10 inline-block bg-cream px-8 py-3 text-sm uppercase tracking-wide text-ink transition-colors hover:bg-cream/80"
+      >
+        Request an investigation
+      </a>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+    <div class="grid gap-12 sm:grid-cols-2 sm:items-center">
+      <div>
+        <p class="font-heading text-sm uppercase tracking-widest text-ink/50">Our mission</p>
+        <h2 class="font-heading mt-3 text-3xl">Evidence first. Sensationalism never.</h2>
+        <p class="mt-5 text-base leading-relaxed text-ink/75">
+          We approach every case the way a lighthouse guides a ship — steady, deliberate, and focused on cutting through uncertainty rather than adding to it. Our team combines historical research, calibrated equipment, and disciplined review to give families and property owners a real answer, not just a good story.
+        </p>
+        <a href="/about" class="font-heading mt-6 inline-block text-sm uppercase tracking-wide underline decoration-cream decoration-2 underline-offset-4">
+          Meet the team
+        </a>
+      </div>
+      <div class="border border-ink/10 bg-cream/40 p-8">
+        <p class="font-heading text-sm uppercase tracking-widest text-ink/60">What we offer</p>
+        <ul class="mt-4 space-y-3 text-sm text-ink/80">
+          <li>&bull; Confidential, no-cost investigations</li>
+          <li>&bull; Historical &amp; archival property research</li>
+          <li>&bull; EVP, EMF, and thermal evidence review</li>
+          <li>&bull; A plain-language final report — no jargon</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {featuredTestimonials.length > 0 && (
+    <section class="border-y border-ink/10 bg-cream/20">
+      <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+        <p class="font-heading text-sm uppercase tracking-widest text-ink/50">In their words</p>
+        <h2 class="font-heading mt-3 text-3xl">Testimonials</h2>
+        <div class="mt-10 grid gap-6 sm:grid-cols-3">
+          {featuredTestimonials.map((t) => <TestimonialCard testimonial={t} />)}
+        </div>
+        <a href="/testimonials" class="font-heading mt-8 inline-block text-sm uppercase tracking-wide underline decoration-cream decoration-2 underline-offset-4">
+          Read all testimonials
+        </a>
+      </div>
+    </section>
+  )}
+
+  {latestPost && (
+    <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <p class="font-heading text-sm uppercase tracking-widest text-ink/50">From the field</p>
+      <h2 class="font-heading mt-3 text-3xl">Latest from the blog</h2>
+      <div class="mt-10 max-w-md">
+        <BlogCard post={latestPost} />
+      </div>
+    </section>
+  )}
+
+  <section class="border-t border-ink/10 bg-ink text-paper">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <p class="font-heading text-sm uppercase tracking-widest text-cream">Stay connected</p>
+      <h2 class="font-heading mt-3 text-3xl">Follow the investigation</h2>
+      <div class="mt-10 max-w-xl">
+        <SocialFeed socialLinks={settings.socialLinks} compact />
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-20 text-center sm:px-6">
+    <h2 class="font-heading text-3xl">Experiencing something you can't explain?</h2>
+    <p class="mx-auto mt-4 max-w-xl text-base text-ink/70">{settings.investigationRequestNote}</p>
+    <a
+      href="/contact"
+      class="font-heading mt-8 inline-block bg-ink px-8 py-3 text-sm uppercase tracking-wide text-paper transition-colors hover:bg-ink/80"
+    >
+      Get in touch
+    </a>
+  </section>
+</Layout>

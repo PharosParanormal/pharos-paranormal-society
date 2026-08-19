@@ -1,0 +1,35 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+const { post } = Astro.props;
+const { title, date, excerpt, coverImage } = post.data;
+const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+---
+
+<a href={`/blog/${post.slug}`} class="group flex flex-col overflow-hidden border border-ink/10 bg-paper transition-shadow hover:shadow-lg">
+  <div class="aspect-[16/9] w-full overflow-hidden bg-cream/40">
+    {coverImage ? (
+      <img
+        src={coverImage}
+        alt={title}
+        class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        loading="lazy"
+      />
+    ) : (
+      <div class="flex h-full w-full items-center justify-center text-ink/25">
+        <span class="font-heading text-2xl uppercase tracking-widest">Pharos</span>
+      </div>
+    )}
+  </div>
+  <div class="flex flex-1 flex-col p-5">
+    <p class="text-xs uppercase tracking-wide text-ink/50">{formattedDate}</p>
+    <h3 class="font-heading mt-2 text-lg leading-snug group-hover:text-ink/70">{title}</h3>
+    <p class="mt-2 flex-1 text-sm text-ink/70">{excerpt}</p>
+    <span class="font-heading mt-4 text-sm uppercase tracking-wide text-ink underline decoration-cream decoration-2 underline-offset-4">
+      Read post
+    </span>
+  </div>
+</a>

@@ -1,0 +1,93 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# This lets editors publish immediately from the CMS form (no draft review step).
+publish_mode: simple
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "team"
+    label: "Team"
+    label_singular: "Team Member"
+    description: "Everyone on the investigation team. Add, edit, or remove people here — no code needed."
+    folder: "src/content/team"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    identifier_field: name
+    fields:
+      - { label: "Full Name", name: "name", widget: "string" }
+      - { label: "Role / Title", name: "role", widget: "string", hint: "e.g. Lead Investigator, Equipment Tech" }
+      - { label: "Photo", name: "photo", widget: "image", required: false, media_folder: "/public/images/team", public_folder: "/images/team" }
+      - label: "Specialties"
+        name: "specialties"
+        widget: "list"
+        required: false
+        hint: "e.g. EVP analysis, Historical research — one per line"
+      - { label: "Display Order", name: "order", widget: "number", default: 99, hint: "Lower numbers show first" }
+      - label: "Bio"
+        name: "body"
+        widget: "markdown"
+        hint: "2–4 paragraphs works best."
+
+  - name: "testimonials"
+    label: "Testimonials"
+    label_singular: "Testimonial"
+    description: "Client testimonials. Toggle 'Featured' to show one on the homepage."
+    folder: "src/content/testimonials"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    identifier_field: name
+    fields:
+      - { label: "Name", name: "name", widget: "string", hint: "First name and last initial works well for privacy, e.g. \"Carol Ann B.\"" }
+      - { label: "Location", name: "location", widget: "string", required: false }
+      - { label: "Quote", name: "quote", widget: "text" }
+      - { label: "Rating (1–5)", name: "rating", widget: "number", min: 1, max: 5, required: false }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Featured on Homepage?", name: "featured", widget: "boolean", default: false }
+
+  - name: "blog"
+    label: "Blog"
+    label_singular: "Blog Post"
+    description: "Field notes and articles. The page URL is generated automatically from the title."
+    folder: "src/content/blog"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Author", name: "author", widget: "string" }
+      - { label: "Cover Image", name: "coverImage", widget: "image", required: false, media_folder: "/public/images/blog", public_folder: "/images/blog" }
+      - { label: "Excerpt", name: "excerpt", widget: "text", hint: "1–2 sentences, shown on the blog list page." }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Tags", name: "tags", widget: "list", required: false, hint: "One per line, optional" }
+
+  - name: "site-settings"
+    label: "Site Settings"
+    description: "Contact info and social links used across the whole site."
+    files:
+      - name: "settings"
+        label: "General Settings"
+        file: "src/content/site-settings/settings.json"
+        fields:
+          - { label: "Contact Email", name: "email", widget: "string" }
+          - { label: "Phone Number", name: "phone", widget: "string", required: false }
+          - { label: "Address / Service Area", name: "address", widget: "string", hint: "e.g. \"Serving the greater Harborview region\"" }
+          - label: "Investigation Request Note"
+            name: "investigationRequestNote"
+            widget: "text"
+            hint: "Short note shown on the Contact page explaining how to request an investigation."
+          - label: "Social Links"
+            name: "socialLinks"
+            widget: "object"
+            fields:
+              - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
+              - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
+              - { label: "TikTok URL", name: "tiktok", widget: "string", required: false }
+              - { label: "YouTube URL", name: "youtube", widget: "string", required: false }

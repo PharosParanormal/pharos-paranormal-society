@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SocialFeed from '../components/SocialFeed.astro';
+import { getCollection } from 'astro:content';
+
+const settingsEntries = await getCollection('site-settings');
+const settings = settingsEntries[0].data;
+---
+
+<Layout title="Merch" description="Pharos Paranormal Society merch — coming soon.">
+  <section class="border-b border-ink/10 bg-ink text-paper">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <p class="font-heading text-sm uppercase tracking-[0.3em] text-cream">Merch</p>
+      <h1 class="font-heading mt-4 max-w-2xl text-4xl sm:text-5xl">The store is on its way</h1>
+      <p class="mt-5 max-w-xl text-white/70">
+        We're putting together a shop with tees, hats, and gear for the Pharos Paranormal Society community. Nothing to buy just yet — check back soon.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-20 text-center sm:px-6">
+    <p class="font-heading text-sm uppercase tracking-widest text-ink/50">In the meantime</p>
+    <h2 class="font-heading mt-3 text-2xl">Follow along for the launch</h2>
+    <p class="mx-auto mt-4 max-w-md text-ink/70">
+      We'll post as soon as the store opens. Give us a follow so you don't miss it.
+    </p>
+    <div class="mx-auto mt-8 max-w-xl">
+      <SocialFeed socialLinks={settings.socialLinks} />
+    </div>
+  </section>
+</Layout>

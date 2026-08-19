@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+import { getCollection } from 'astro:content';
+
+const testimonials = (await getCollection('testimonials')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Layout title="Testimonials" description="What clients say about investigations with Pharos Paranormal Society.">
+  <section class="border-b border-ink/10 bg-ink text-paper">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <p class="font-heading text-sm uppercase tracking-[0.3em] text-cream">Testimonials</p>
+      <h1 class="font-heading mt-4 max-w-2xl text-4xl sm:text-5xl">In their own words</h1>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+    {testimonials.length > 0 ? (
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {testimonials.map((t) => <TestimonialCard testimonial={t} />)}
+      </div>
+    ) : (
+      <p class="text-ink/60">No testimonials yet — check back soon.</p>
+    )}
+  </section>
+</Layout>

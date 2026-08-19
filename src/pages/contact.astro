@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import SocialFeed from '../components/SocialFeed.astro';
+import { getCollection } from 'astro:content';
+
+const settingsEntries = await getCollection('site-settings');
+const settings = settingsEntries[0].data;
+---
+
+<Layout title="Contact" description="Request an investigation or get in touch with Pharos Paranormal Society.">
+  <section class="border-b border-ink/10 bg-ink text-paper">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <p class="font-heading text-sm uppercase tracking-[0.3em] text-cream">Contact</p>
+      <h1 class="font-heading mt-4 max-w-2xl text-4xl sm:text-5xl">Let's talk about what you're experiencing</h1>
+      <p class="mt-5 max-w-xl text-white/70">{settings.investigationRequestNote}</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+    <div class="grid gap-12 lg:grid-cols-[1.2fr,1fr]">
+      <div>
+        <h2 class="font-heading text-2xl">Send a message</h2>
+        <div class="mt-6">
+          <ContactForm />
+        </div>
+      </div>
+
+      <div class="space-y-10">
+        <div class="border border-ink/10 bg-cream/30 p-6">
+          <p class="font-heading text-sm uppercase tracking-widest text-ink/60">Direct contact</p>
+          <ul class="mt-4 space-y-2 text-sm text-ink/80">
+            <li><a href={`mailto:${settings.email}`} class="underline decoration-cream decoration-2 underline-offset-4">{settings.email}</a></li>
+            <li>{settings.address}</li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="font-heading text-sm uppercase tracking-widest text-ink/60">Follow us</p>
+          <div class="mt-4">
+            <SocialFeed socialLinks={settings.socialLinks} />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TeamCard from '../components/TeamCard.astro';
+import SocialFeed from '../components/SocialFeed.astro';
+import { getCollection } from 'astro:content';
+
+const team = (await getCollection('team')).sort((a, b) => a.data.order - b.data.order);
+const settingsEntries = await getCollection('site-settings');
+const settings = settingsEntries[0].data;
+---
+
+<Layout title="About" description="Meet the Pharos Paranormal Society team.">
+  <section class="border-b border-ink/10 bg-ink text-paper">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <p class="font-heading text-sm uppercase tracking-[0.3em] text-cream">About Us</p>
+      <h1 class="font-heading mt-4 max-w-2xl text-4xl sm:text-5xl">The team behind the investigation</h1>
+      <p class="mt-5 max-w-xl text-white/70">
+        A small group of investigators, researchers, and technicians committed to careful, evidence-driven paranormal investigation.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pt-20 sm:px-6">
+    <img
+      src="/images/team/Everyone.jpg"
+      alt="The full Pharos Paranormal Society team"
+      class="w-full border border-ink/10 object-cover"
+    />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {team.map((member) => <TeamCard member={member} />)}
+    </div>
+  </section>
+
+  <section class="border-t border-ink/10 bg-cream/20">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <p class="font-heading text-sm uppercase tracking-widest text-ink/50">Follow along</p>
+      <h2 class="font-heading mt-3 text-3xl">Behind the scenes</h2>
+      <div class="mt-10 max-w-xl">
+        <SocialFeed socialLinks={settings.socialLinks} />
+      </div>
+    </div>
+  </section>
+</Layout>

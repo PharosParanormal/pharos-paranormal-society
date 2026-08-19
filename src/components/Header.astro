@@ -1,0 +1,70 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/testimonials', label: 'Testimonials' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/merch', label: 'Merch' },
+  { href: '/contact', label: 'Contact' },
+];
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 bg-ink text-paper">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
+    <a href="/" class="flex items-center gap-3">
+      <span class="inline-block rounded bg-paper p-1">
+        <img src="/images/logo.png" alt="Pharos Paranormal Society" class="h-14 w-14 object-contain" />
+      </span>
+    </a>
+
+    <nav class="hidden gap-8 md:flex">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'font-heading text-sm uppercase tracking-wide transition-colors hover:text-cream',
+            currentPath === link.href ? 'text-cream' : 'text-paper',
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <button
+      id="menu-toggle"
+      class="flex flex-col gap-1.5 md:hidden"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+    >
+      <span class="h-0.5 w-6 bg-paper"></span>
+      <span class="h-0.5 w-6 bg-paper"></span>
+      <span class="h-0.5 w-6 bg-paper"></span>
+    </button>
+  </div>
+
+  <nav id="mobile-menu" class="hidden flex-col gap-1 border-t border-white/10 px-4 pb-4 md:hidden">
+    {navLinks.map((link) => (
+      <a
+        href={link.href}
+        class:list={[
+          'font-heading py-2 text-sm uppercase tracking-wide',
+          currentPath === link.href ? 'text-cream' : 'text-paper',
+        ]}
+      >
+        {link.label}
+      </a>
+    ))}
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  toggle?.addEventListener('click', () => {
+    const isOpen = menu?.classList.toggle('flex');
+    menu?.classList.toggle('hidden');
+    toggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
+  });
+</script>
