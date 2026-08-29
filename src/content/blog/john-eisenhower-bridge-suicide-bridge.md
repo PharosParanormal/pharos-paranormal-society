@@ -2,7 +2,7 @@
 title: "The John Eisenhower Bridge: Inside Gettysburg's \"Suicide Bridge\""
 date: 2026-08-29
 author: Pharos Paranormal Society
-excerpt: "A 138-year-old iron truss bridge near the Eisenhower National Historic Site carries one of Gettysburg's darkest nicknames. Here's what we found when we spent the night there."
+excerpt: "A 138-year-old iron truss bridge near the Eisenhower National Historic Site carries one of Gettysburg's darkest nicknames. Here's what we found over two days investigating it."
 tags:
   - gettysburg
   - haunted-bridges
@@ -30,13 +30,13 @@ What isn't in dispute is the bridge's reputation. It draws ghost tours, paranorm
 
 ## Our Investigation
 
-On August 23rd, our team spent an overnight session at the bridge, running:
+Our team investigated the bridge over two days. On August 23rd, we conducted a daytime session to document the site and establish a baseline. On August 24th, we returned from dusk until about 9pm, running:
 
 - **EVP (Electronic Voice Phenomenon) sessions** — direct-address questioning with digital recorders, reviewed afterward for anomalous audio
 - **The Estes Method** — a blindfolded, noise-canceling headphone technique designed to reduce suggestion bias during spirit communication attempts
 - **REM-Pod monitoring** — tracking electromagnetic field fluctuations around the bridge structure and along the run
 
-The full investigation is up now on our YouTube channel, and it's the first field piece we're releasing as Pharos Paranormal Society. We won't spoil what we found here — you can watch that for yourself — but we will say the bridge lived up to its reputation for atmosphere, if nothing else.
+The full investigation is [up now on our YouTube channel](https://youtu.be/MtJie-XXRRU?si=pSwlx0a-8obNMPC_), and it's the first field piece we're releasing as Pharos Paranormal Society. We won't spoil what we found here — you can watch that for yourself — but we will say the bridge lived up to its reputation for atmosphere, if nothing else.
 
 ## A Note on the Name
 
@@ -44,7 +44,7 @@ Locations with names like "Suicide Bridge" carry real weight beyond the ghost st
 
 ## Watch the Investigation
 
-Our full investigation of the John Eisenhower Bridge is live on YouTube now. If you're new here, this is a good starting point for what Pharos Paranormal Society is about: methodical field work, transparent methodology, and a healthy respect for the places — and people — behind every legend.
+Our full investigation of the John Eisenhower Bridge is [live on YouTube now](https://youtu.be/MtJie-XXRRU?si=pSwlx0a-8obNMPC_). If you're new here, this is a good starting point for what Pharos Paranormal Society is about: methodical field work, transparent methodology, and a healthy respect for the places — and people — behind every legend.
 
 Pharos Paranormal Society investigates haunted locations throughout the Gettysburg area and beyond, combining field research methodology with genuine curiosity about the unexplained. Follow us on Facebook and YouTube for our latest investigations.
 
