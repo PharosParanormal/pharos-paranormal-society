@@ -3,6 +3,7 @@ title: "The John Eisenhower Bridge: Inside Gettysburg's \"Suicide Bridge\""
 date: 2026-08-29
 author: Pharos Paranormal Society
 excerpt: "A 138-year-old iron truss bridge near the Eisenhower National Historic Site carries one of Gettysburg's darkest nicknames. Here's what we found over two days investigating it."
+coverImage: /images/gallery/DSC_1977.jpg
 tags:
   - gettysburg
   - haunted-bridges

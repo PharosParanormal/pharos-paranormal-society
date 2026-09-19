@@ -3,6 +3,7 @@ title: "Before You Call Us: What to Document First"
 date: 2026-05-14
 author: Jenny
 excerpt: "A short guide to logging activity in your home before an investigation, so we can spend our time with you more effectively."
+coverImage: /images/gallery/Jenny_EMF.jpg
 tags:
   - client-guide
   - getting-started

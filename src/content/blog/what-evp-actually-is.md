@@ -3,6 +3,7 @@ title: "What EVP Actually Is (and Isn't)"
 date: 2026-06-02
 author: Travis
 excerpt: "Electronic voice phenomena gets misunderstood constantly. Here's how we record it, review it, and decide what counts as evidence."
+coverImage: /images/gallery/EVP_Session_RedLight.jpg
 tags:
   - evp
   - investigation-methods
