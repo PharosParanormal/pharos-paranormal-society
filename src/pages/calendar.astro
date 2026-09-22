@@ -76,10 +76,15 @@ const months = [...new Set(events.map((e) => e.month))].map((month) => ({
             <ul class="divide-y divide-ink/10">
               {events.map((e) => (
                 <li data-event data-start={e.start} class="flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:gap-6">
-                  <div class="flex w-20 shrink-0 flex-col items-center bg-ink py-3 text-paper">
+                  <div class="relative flex w-20 shrink-0 flex-col items-center overflow-hidden bg-ink py-3 text-paper">
                     <span class="font-heading text-xs uppercase tracking-widest text-cream">{e.weekday}</span>
                     <span class="font-heading text-3xl leading-none">{e.day}</span>
                     <span class="text-xs uppercase tracking-wide text-white/70">{e.monthShort}</span>
+                    {e.soldOut && (
+                      <span class="font-heading absolute left-1/2 top-1/2 w-40 -translate-x-1/2 -translate-y-1/2 -rotate-[35deg] bg-red-600 py-1.5 text-center text-xs uppercase tracking-widest text-paper shadow">
+                        Sold Out
+                      </span>
+                    )}
                   </div>
                   <div class="flex-1">
                     <h3 class="font-heading text-lg">{e.title}</h3>
@@ -89,20 +94,14 @@ const months = [...new Set(events.map((e) => e.month))].map((month) => ({
                       {e.cost && <> · {e.cost}</>}
                     </p>
                   </div>
-                  {e.soldOut ? (
-                    <span class="font-heading inline-block shrink-0 border-2 border-ink px-6 py-3 text-center text-sm uppercase tracking-wide text-ink">
-                      Sold Out
-                    </span>
-                  ) : (
-                    <a
-                      href={e.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="font-heading inline-block shrink-0 bg-cream px-6 py-3 text-center text-sm uppercase tracking-wide text-ink transition-colors hover:bg-cream/80"
-                    >
-                      Book &rarr;
-                    </a>
-                  )}
+                  <a
+                    href={e.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="font-heading inline-block shrink-0 bg-cream px-6 py-3 text-center text-sm uppercase tracking-wide text-ink transition-colors hover:bg-cream/80"
+                  >
+                    {e.soldOut ? 'Details' : 'Book'} &rarr;
+                  </a>
                 </li>
               ))}
             </ul>
