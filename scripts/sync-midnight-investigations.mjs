@@ -5,6 +5,10 @@
 // fall back to the category's iCal feed. If both fail, the existing file is left
 // untouched so the calendar never gets wiped by a bad fetch.
 //
+// Sold-out status comes from their Event Tickets API: an event is sold out when
+// every ticket type has 0 seats available. If that can't be checked, the last
+// known status is kept.
+//
 // Usage: node scripts/sync-midnight-investigations.mjs [--dry-run]
 
 import { readFile, writeFile } from 'node:fs/promises';
@@ -55,6 +59,7 @@ async function fromRestApi() {
     const data = await (await get(url)).json();
     for (const e of data.events ?? []) {
       events.push({
+        id: e.id,
         title: decode(e.title),
         start: toLocalIso(e.start_date),
         end: toLocalIso(e.end_date),
@@ -66,6 +71,13 @@ async function fromRestApi() {
     url = data.next_rest_url ?? null;
   }
   return events;
+}
+
+async function isSoldOut(eventId) {
+  const data = await (await get(`${SITE}/wp-json/tribe/tickets/v1/tickets?include_post=${eventId}`)).json();
+  const tickets = data.tickets ?? [];
+  if (tickets.length === 0) return null;
+  return tickets.every((t) => t.capacity_details?.available === 0);
 }
 
 async function fromIcal() {
@@ -103,6 +115,12 @@ async function main() {
     process.exit(1);
   }
 
+  let previous = null;
+  try {
+    previous = JSON.parse(await readFile(OUTPUT, 'utf8'));
+  } catch {}
+  const previousSoldOut = new Map((previous?.events ?? []).map((e) => [e.url, e.soldOut ?? false]));
+
   const now = new Date().toISOString().slice(0, 19);
   const seen = new Set();
   events = events
@@ -113,18 +131,27 @@ async function main() {
     })
     .sort((a, b) => a.start.localeCompare(b.start));
 
+  for (const e of events) {
+    let soldOut = null;
+    if (e.id) {
+      try {
+        soldOut = await isSoldOut(e.id);
+      } catch (err) {
+        console.warn(`Could not check tickets for ${e.url}: ${err.message}`);
+      }
+    }
+    e.soldOut = soldOut ?? previousSoldOut.get(e.url) ?? false;
+    delete e.id;
+  }
+
   console.log(`Found ${events.length} upcoming midnight investigations via ${source}:`);
-  for (const e of events) console.log(`  ${e.start}  ${e.title}  ${e.cost ?? ''}  ${e.url}`);
+  for (const e of events) console.log(`  ${e.start}  ${e.title}  ${e.cost ?? ''}${e.soldOut ? '  SOLD OUT' : ''}  ${e.url}`);
 
   if (DRY_RUN) {
     console.log(JSON.stringify(events, null, 2));
     return;
   }
 
-  let previous = null;
-  try {
-    previous = JSON.parse(await readFile(OUTPUT, 'utf8'));
-  } catch {}
   if (previous && JSON.stringify(previous.events) === JSON.stringify(events)) {
     console.log('No changes.');
     return;

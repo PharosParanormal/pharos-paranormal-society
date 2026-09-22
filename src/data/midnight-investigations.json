@@ -9,7 +9,8 @@
       "end": "2026-09-26T00:13:00",
       "cost": "$55.00",
       "location": "Gettysburg Tours Inc.",
-      "url": "https://www.gettysburgbattlefieldtours.com/event/midnight-investigation-orphanage-2609252359/"
+      "url": "https://www.gettysburgbattlefieldtours.com/event/midnight-investigation-orphanage-2609252359/",
+      "soldOut": true
     },
     {
       "title": "Midnight Investigation (Jennie Wade House)",
@@ -17,7 +18,8 @@
       "end": "2026-10-04T00:13:00",
       "cost": null,
       "location": "Gettysburg Tours Inc.",
-      "url": "https://www.gettysburgbattlefieldtours.com/event/midnight-investigation-jennie-wade-house-2610032359/"
+      "url": "https://www.gettysburgbattlefieldtours.com/event/midnight-investigation-jennie-wade-house-2610032359/",
+      "soldOut": false
     },
     {
       "title": "Midnight Investigation (Combo)",
@@ -25,7 +27,8 @@
       "end": "2026-11-01T00:13:00",
       "cost": "$99.00",
       "location": "Gettysburg Tours Inc.",
-      "url": "https://www.gettysburgbattlefieldtours.com/event/midnight-investigation-combo-2610312359/"
+      "url": "https://www.gettysburgbattlefieldtours.com/event/midnight-investigation-combo-2610312359/",
+      "soldOut": false
     },
     {
       "title": "Midnight Investigation (Orphanage)",
@@ -33,7 +36,8 @@
       "end": "2026-11-08T00:13:00",
       "cost": null,
       "location": "Gettysburg Tours Inc.",
-      "url": "https://www.gettysburgbattlefieldtours.com/event/midnight-investigation-orphanage-2611072359/"
+      "url": "https://www.gettysburgbattlefieldtours.com/event/midnight-investigation-orphanage-2611072359/",
+      "soldOut": false
     },
     {
       "title": "Midnight Investigation (Jennie Wade House)",
@@ -41,7 +45,8 @@
       "end": "2026-11-21T23:59:00",
       "cost": null,
       "location": "Gettysburg Tours Inc.",
-      "url": "https://www.gettysburgbattlefieldtours.com/event/midnight-investigation-jennie-wade-house-2611212345/"
+      "url": "https://www.gettysburgbattlefieldtours.com/event/midnight-investigation-jennie-wade-house-2611212345/",
+      "soldOut": false
     }
   ]
 }

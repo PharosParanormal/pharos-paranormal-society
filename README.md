@@ -78,9 +78,9 @@ The Decap CMS config (`public/admin/config.yml`) mirrors this schema field-for-f
 
 ### Investigation calendar
 
-The `/calendar` page lists upcoming Midnight Investigations from the [Ghostly Images of Gettysburg schedule](https://www.gettysburgbattlefieldtours.com/events/category/ghost-tours/midnight-investigation/). A GitHub Action (`.github/workflows/sync-midnight-investigations.yml`) runs every Monday, fetches the dates with `scripts/sync-midnight-investigations.mjs`, and commits any changes to `src/data/midnight-investigations.json`. That commit triggers a Netlify rebuild. To refresh the dates right away, open the repo's **Actions** tab and run **Sync midnight investigation dates** manually. Dates that have already passed are hidden automatically.
+The `/calendar` page lists upcoming Midnight Investigations from the [Ghostly Images of Gettysburg schedule](https://www.gettysburgbattlefieldtours.com/events/category/ghost-tours/midnight-investigation/). A GitHub Action (`.github/workflows/sync-midnight-investigations.yml`) runs every morning, fetches the dates with `scripts/sync-midnight-investigations.mjs`, and commits any changes to `src/data/midnight-investigations.json`. That commit triggers a Netlify rebuild. To refresh the dates right away, open the repo's **Actions** tab and run **Sync midnight investigation dates** manually. Dates that have already passed are hidden automatically.
 
-To mark a date as sold out, add its start date (`YYYY-MM-DD`, as listed by Ghostly Images) to `dates` in `src/data/sold-out.json`. That date gets a red **Sold Out** ribbon across it, and its **Book** button becomes **Details** (still linking to the event page). The weekly sync never changes this file.
+Sold-out dates are detected automatically: the sync checks Ghostly Images' ticket system, and when a date has no seats left it gets a red **Sold Out** ribbon across it and its **Book** button becomes **Details** (still linking to the event page). If a date opens back up, the ribbon comes off on the next sync. To force a date to show as sold out anyway, add its start date (`YYYY-MM-DD`) to `dates` in `src/data/sold-out.json`; the sync never changes that file.
 
 ### Contact
 

@@ -2,8 +2,9 @@ name: Sync midnight investigation dates
 
 on:
   schedule:
-    # Every Monday at 10:00 UTC (6 AM Eastern during daylight time)
-    - cron: '0 10 * * 1'
+    # Daily at 10:00 UTC (6 AM Eastern during daylight time), so sold-out
+    # dates show up quickly. It only commits when something changed.
+    - cron: '0 10 * * *'
   workflow_dispatch:
   pull_request:
     paths:
@@ -27,16 +28,12 @@ jobs:
         if: github.event_name == 'pull_request'
         run: node scripts/sync-midnight-investigations.mjs --dry-run
 
-      - name: Probe sold-out markers (temporary)
-        if: github.event_name == 'workflow_dispatch'
-        run: node scripts/probe-sold-out.mjs
-
       - name: Fetch dates
-        if: github.event_name == 'schedule'
+        if: github.event_name != 'pull_request'
         run: node scripts/sync-midnight-investigations.mjs
 
       - name: Commit changes
-        if: github.event_name == 'schedule'
+        if: github.event_name != 'pull_request'
         run: |
           if git diff --quiet -- src/data/midnight-investigations.json; then
             echo "Calendar already up to date."
