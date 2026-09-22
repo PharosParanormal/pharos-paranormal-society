@@ -20,6 +20,13 @@ try {
 } catch {
   galleryImages = [];
 }
+
+const galleryAltText: Record<string, string> = {
+  'Amy_Bruni_Adam_Berry_Haunted_Orphanage.jpg':
+    'The Pharos Paranormal Society team with Amy Bruni and Adam Berry at the Haunted Orphanage during Strange Escapes in Gettysburg',
+  'Steve_Gonsalves_Jennie_Wade_House.jpg':
+    'Travis and Angela with Steve Gonsalves at the Jennie Wade House during Strange Escapes in Gettysburg',
+};
 ---
 
 <Layout title="About" description="Meet the Pharos Paranormal Society team.">
@@ -55,7 +62,7 @@ try {
         {galleryImages.map((file) => (
           <img
             src={`/images/gallery/${file}`}
-            alt="Pharos Paranormal Society team member working with investigation equipment"
+            alt={galleryAltText[file] ?? 'Pharos Paranormal Society team member working with investigation equipment'}
             class="aspect-square w-full border border-ink/10 object-cover"
             loading="lazy"
           />
