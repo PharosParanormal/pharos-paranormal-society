@@ -1,7 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import schedule from '../data/midnight-investigations.json';
-// Edited by hand (the weekly sync never touches it): start dates, YYYY-MM-DD, that are sold out.
+// Sold-out status is synced from Ghostly Images' ticketing. This hand-edited list
+// (start dates, YYYY-MM-DD) can force a date to show as sold out regardless.
 import soldOut from '../data/sold-out.json';
 
 // Times in the data file are Gettysburg local time ("2026-09-26T00:30:00"),
@@ -32,7 +33,7 @@ const events = schedule.events
     const dayName = fmt(night, { weekday: 'long' });
     const startTime = time(start);
     return {
-      soldOut: soldOut.dates.includes(e.start.slice(0, 10)),
+      soldOut: e.soldOut || soldOut.dates.includes(e.start.slice(0, 10)),
       ...e,
       month: fmt(start, { month: 'long', year: 'numeric' }),
       weekday: fmt(night, { weekday: 'short' }),
