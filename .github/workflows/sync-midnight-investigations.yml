@@ -1,0 +1,45 @@
+name: Sync midnight investigation dates
+
+on:
+  schedule:
+    # Every Monday at 10:00 UTC (6 AM Eastern during daylight time)
+    - cron: '0 10 * * 1'
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - scripts/sync-midnight-investigations.mjs
+      - .github/workflows/sync-midnight-investigations.yml
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # On pull requests, just check that the fetch works and print what it finds.
+      - name: Preview dates
+        if: github.event_name == 'pull_request'
+        run: node scripts/sync-midnight-investigations.mjs --dry-run
+
+      - name: Fetch dates
+        if: github.event_name != 'pull_request'
+        run: node scripts/sync-midnight-investigations.mjs
+
+      - name: Commit changes
+        if: github.event_name != 'pull_request'
+        run: |
+          if git diff --quiet -- src/data/midnight-investigations.json; then
+            echo "Calendar already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898699+github-actions[bot]@users.noreply.github.com"
+          git add src/data/midnight-investigations.json
+          git commit -m "Update midnight investigation calendar"
+          git push

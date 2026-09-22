@@ -76,6 +76,10 @@ The Decap CMS config (`public/admin/config.yml`) mirrors this schema field-for-f
 
 `src/components/SocialFeed.astro` reads `site-settings.socialLinks` and renders a clean icon grid linking out to whichever platforms are filled in. True embedded feeds (Instagram/TikTok/Facebook widgets) require per-platform developer API keys, which this project deliberately avoids to keep it free and dependency-free — see the comment at the top of that component for where to wire embeds in later.
 
+### Investigation calendar
+
+The `/calendar` page lists upcoming Midnight Investigations from the [Ghostly Images of Gettysburg schedule](https://www.gettysburgbattlefieldtours.com/events/category/ghost-tours/midnight-investigation/). A GitHub Action (`.github/workflows/sync-midnight-investigations.yml`) runs every Monday, fetches the dates with `scripts/sync-midnight-investigations.mjs`, and commits any changes to `src/data/midnight-investigations.json`. That commit triggers a Netlify rebuild. To refresh the dates right away, open the repo's **Actions** tab and run **Sync midnight investigation dates** manually. Dates that have already passed are hidden automatically.
+
 ### Contact
 
 The `/contact` page points visitors straight at a `mailto:` link built from `site-settings.email`, rather than an on-site form — simplest possible setup, no Netlify Forms configuration needed.
