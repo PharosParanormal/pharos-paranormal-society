@@ -80,6 +80,8 @@ The Decap CMS config (`public/admin/config.yml`) mirrors this schema field-for-f
 
 The `/calendar` page lists upcoming Midnight Investigations from the [Ghostly Images of Gettysburg schedule](https://www.gettysburgbattlefieldtours.com/events/category/ghost-tours/midnight-investigation/). A GitHub Action (`.github/workflows/sync-midnight-investigations.yml`) runs every Monday, fetches the dates with `scripts/sync-midnight-investigations.mjs`, and commits any changes to `src/data/midnight-investigations.json`. That commit triggers a Netlify rebuild. To refresh the dates right away, open the repo's **Actions** tab and run **Sync midnight investigation dates** manually. Dates that have already passed are hidden automatically.
 
+To mark a date as sold out, add its start date (`YYYY-MM-DD`, as listed by Ghostly Images) to `dates` in `src/data/sold-out.json`. That date's **Book** button is replaced with **Sold Out**. The weekly sync never changes this file.
+
 ### Contact
 
 The `/contact` page points visitors straight at a `mailto:` link built from `site-settings.email`, rather than an on-site form — simplest possible setup, no Netlify Forms configuration needed.

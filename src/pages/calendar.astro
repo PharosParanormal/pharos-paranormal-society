@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import schedule from '../data/midnight-investigations.json';
+// Edited by hand (the weekly sync never touches it): start dates, YYYY-MM-DD, that are sold out.
+import soldOut from '../data/sold-out.json';
 
 // Times in the data file are Gettysburg local time ("2026-09-26T00:30:00"),
 // so format them as-is without shifting through the build machine's timezone.
@@ -30,6 +32,7 @@ const events = schedule.events
     const dayName = fmt(night, { weekday: 'long' });
     const startTime = time(start);
     return {
+      soldOut: soldOut.dates.includes(e.start.slice(0, 10)),
       ...e,
       month: fmt(start, { month: 'long', year: 'numeric' }),
       weekday: fmt(night, { weekday: 'short' }),
@@ -86,14 +89,20 @@ const months = [...new Set(events.map((e) => e.month))].map((month) => ({
                       {e.cost && <> · {e.cost}</>}
                     </p>
                   </div>
-                  <a
-                    href={e.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="font-heading inline-block shrink-0 bg-cream px-6 py-3 text-center text-sm uppercase tracking-wide text-ink transition-colors hover:bg-cream/80"
-                  >
-                    Book &rarr;
-                  </a>
+                  {e.soldOut ? (
+                    <span class="font-heading inline-block shrink-0 border-2 border-ink px-6 py-3 text-center text-sm uppercase tracking-wide text-ink">
+                      Sold Out
+                    </span>
+                  ) : (
+                    <a
+                      href={e.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="font-heading inline-block shrink-0 bg-cream px-6 py-3 text-center text-sm uppercase tracking-wide text-ink transition-colors hover:bg-cream/80"
+                    >
+                      Book &rarr;
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
