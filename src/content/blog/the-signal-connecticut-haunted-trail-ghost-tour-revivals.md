@@ -3,6 +3,7 @@ title: "The Signal: Connecticut Turns Its Witch Trial History Into a Statewide G
 date: 2026-09-22
 author: Pharos Paranormal Society
 excerpt: "Connecticut launches a 130-stop haunted history tourism trail, a Vancouver-area group runs a benefit investigation at a reputedly haunted museum house, and a Lethbridge historical society revives its ghost tours after nine years off."
+coverImage: /images/gallery/Paranormal_News_Roundup_Connecticut_Lethbridge.png
 tags:
   - the-signal
   - haunted-locations
