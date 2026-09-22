@@ -27,12 +27,16 @@ jobs:
         if: github.event_name == 'pull_request'
         run: node scripts/sync-midnight-investigations.mjs --dry-run
 
+      - name: Probe sold-out markers (temporary)
+        if: github.event_name == 'workflow_dispatch'
+        run: node scripts/probe-sold-out.mjs
+
       - name: Fetch dates
-        if: github.event_name != 'pull_request'
+        if: github.event_name == 'schedule'
         run: node scripts/sync-midnight-investigations.mjs
 
       - name: Commit changes
-        if: github.event_name != 'pull_request'
+        if: github.event_name == 'schedule'
         run: |
           if git diff --quiet -- src/data/midnight-investigations.json; then
             echo "Calendar already up to date."
