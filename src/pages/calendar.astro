@@ -12,7 +12,12 @@ const parse = (s: string) => {
 };
 const fmt = (date: Date, opts: Intl.DateTimeFormatOptions) =>
   new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', ...opts }).format(date);
-const time = (date: Date) => fmt(date, { hour: 'numeric', minute: '2-digit' });
+const time = (date: Date) => {
+  const minutes = date.getUTCHours() * 60 + date.getUTCMinutes();
+  // Ghostly Images lists midnight starts as 11:59 PM.
+  if (minutes >= 23 * 60 + 59 || minutes === 0) return 'Midnight';
+  return fmt(date, { hour: 'numeric', minute: '2-digit' });
+};
 
 const today = new Date().toISOString().slice(0, 10);
 const events = schedule.events

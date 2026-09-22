@@ -116,7 +116,10 @@ async function main() {
   console.log(`Found ${events.length} upcoming midnight investigations via ${source}:`);
   for (const e of events) console.log(`  ${e.start}  ${e.title}  ${e.cost ?? ''}  ${e.url}`);
 
-  if (DRY_RUN) return;
+  if (DRY_RUN) {
+    console.log(JSON.stringify(events, null, 2));
+    return;
+  }
 
   let previous = null;
   try {
