@@ -5,9 +5,13 @@ import { getCollection } from 'astro:content';
 
 const settingsEntries = await getCollection('site-settings');
 const settings = settingsEntries[0].data;
+
+const fieldClass =
+  'mt-1 block w-full border border-ink/20 bg-paper px-4 py-3 text-sm text-ink placeholder:text-ink/40 focus:border-ink focus:outline-none';
+const labelClass = 'font-heading text-xs uppercase tracking-widest text-ink/70';
 ---
 
-<Layout title="Contact" description="Get in touch with Pharos Paranormal Society.">
+<Layout title="Contact" description="Request a paranormal investigation with Pharos Paranormal Society.">
   <section class="border-b border-ink/10 bg-ink text-paper">
     <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
       <p class="font-heading text-sm uppercase tracking-[0.3em] text-cream">Contact</p>
@@ -16,26 +20,102 @@ const settings = settingsEntries[0].data;
     </div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-    <div class="grid gap-12 lg:grid-cols-2">
-      <div class="flex flex-col items-start border border-ink/10 bg-cream/30 p-8">
-        <p class="font-heading text-sm uppercase tracking-widest text-ink/60">Get in touch</p>
+  <section id="request" class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+    <div class="grid gap-12 lg:grid-cols-[1.4fr_1fr]">
+      <div class="border border-ink/10 bg-cream/30 p-8">
+        <p class="font-heading text-sm uppercase tracking-widest text-ink/60">Request an investigation</p>
         <p class="mt-3 text-ink/80">
-          The fastest way to reach us is by email. Tell us about your location and what you've been experiencing, and we'll follow up within a few days.
+          Fill out the form below and we'll follow up within a few days. Every request is reviewed personally and kept confidential.
         </p>
-        <a
-          href={`mailto:${settings.email}`}
-          class="font-heading mt-6 inline-block bg-ink px-8 py-3 text-sm uppercase tracking-wide text-paper transition-colors hover:bg-ink/80"
+
+        <form
+          name="investigation-request"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          action="/contact/thank-you"
+          class="mt-8 space-y-5"
         >
-          {settings.email}
-        </a>
-        <p class="mt-6 text-sm text-ink/60">{settings.address}</p>
+          <input type="hidden" name="form-name" value="investigation-request" />
+          <p class="hidden">
+            <label>
+              Don't fill this out if you're human: <input name="bot-field" />
+            </label>
+          </p>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="first-name" class={labelClass}>First name</label>
+              <input type="text" id="first-name" name="first-name" required class={fieldClass} />
+            </div>
+            <div>
+              <label for="last-name" class={labelClass}>Last name</label>
+              <input type="text" id="last-name" name="last-name" required class={fieldClass} />
+            </div>
+          </div>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="phone" class={labelClass}>Phone number</label>
+              <input type="tel" id="phone" name="phone" required class={fieldClass} />
+            </div>
+            <div>
+              <label for="email" class={labelClass}>Email address</label>
+              <input type="email" id="email" name="email" required class={fieldClass} />
+            </div>
+          </div>
+
+          <div>
+            <label for="location" class={labelClass}>Location of the incident</label>
+            <input
+              type="text"
+              id="location"
+              name="location"
+              required
+              placeholder="Address, city, or property name"
+              class={fieldClass}
+            />
+          </div>
+
+          <div>
+            <label for="details" class={labelClass}>Tell us what you're dealing with</label>
+            <textarea
+              id="details"
+              name="details"
+              required
+              rows="6"
+              placeholder="Share as many details as possible — what you've experienced, when it started, who else has witnessed it, and anything else that feels relevant."
+              class={fieldClass}
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="font-heading inline-block bg-ink px-8 py-3 text-sm uppercase tracking-wide text-paper transition-colors hover:bg-ink/80"
+          >
+            Submit request
+          </button>
+        </form>
       </div>
 
       <div>
-        <p class="font-heading text-sm uppercase tracking-widest text-ink/60">Follow us</p>
-        <div class="mt-4">
-          <SocialFeed socialLinks={settings.socialLinks} />
+        <div class="border border-ink/10 bg-cream/30 p-8">
+          <p class="font-heading text-sm uppercase tracking-widest text-ink/60">Prefer email?</p>
+          <p class="mt-3 text-ink/80">You can also reach us directly.</p>
+          <a
+            href={`mailto:${settings.email}`}
+            class="font-heading mt-4 inline-block text-sm uppercase tracking-wide underline decoration-cream decoration-2 underline-offset-4"
+          >
+            {settings.email}
+          </a>
+          <p class="mt-6 text-sm text-ink/60">{settings.address}</p>
+        </div>
+
+        <div class="mt-12">
+          <p class="font-heading text-sm uppercase tracking-widest text-ink/60">Follow us</p>
+          <div class="mt-4">
+            <SocialFeed socialLinks={settings.socialLinks} />
+          </div>
         </div>
       </div>
     </div>
