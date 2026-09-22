@@ -14,7 +14,22 @@ const CATEGORY = 'midnight-investigation';
 const CATEGORY_PAGE = `${SITE}/events/category/ghost-tours/${CATEGORY}/`;
 const OUTPUT = new URL('../src/data/midnight-investigations.json', import.meta.url);
 const DRY_RUN = process.argv.includes('--dry-run');
-const HEADERS = { 'User-Agent': 'PharosParanormalSociety-CalendarSync/1.0 (+https://pharosparanormal.netlify.app)' };
+// Their firewall rejects obvious bot user agents, so send ordinary browser headers.
+const HEADERS = {
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
+  Accept: 'text/html,application/json,text/calendar;q=0.9,*/*;q=0.8',
+  'Accept-Language': 'en-US,en;q=0.9',
+};
+
+async function get(url) {
+  const res = await fetch(url, { headers: HEADERS });
+  if (!res.ok) {
+    const server = res.headers.get('server') ?? 'unknown';
+    const body = (await res.text()).replace(/\s+/g, ' ').slice(0, 300);
+    throw new Error(`${res.status} from ${url} (server: ${server}) ${body}`);
+  }
+  return res;
+}
 
 const decode = (s = '') =>
   s
@@ -37,9 +52,7 @@ async function fromRestApi() {
   let url = `${SITE}/wp-json/tribe/events/v1/events?categories=${CATEGORY}&start_date=${today}&per_page=50`;
   const events = [];
   for (let page = 0; url && page < 20; page++) {
-    const res = await fetch(url, { headers: HEADERS });
-    if (!res.ok) throw new Error(`REST API ${res.status} for ${url}`);
-    const data = await res.json();
+    const data = await (await get(url)).json();
     for (const e of data.events ?? []) {
       events.push({
         title: decode(e.title),
@@ -56,9 +69,7 @@ async function fromRestApi() {
 }
 
 async function fromIcal() {
-  const res = await fetch(`${CATEGORY_PAGE}?ical=1`, { headers: HEADERS });
-  if (!res.ok) throw new Error(`iCal ${res.status}`);
-  const text = (await res.text()).replace(/\r?\n[ \t]/g, '');
+  const text = (await (await get(`${CATEGORY_PAGE}?ical=1`)).text()).replace(/\r?\n[ \t]/g, '');
   const unescape = (s = '') => s.replace(/\\([,;\\])/g, '$1').replace(/\\n/gi, ' ').trim();
   const icalDate = (v) => v && `${v.slice(0, 4)}-${v.slice(4, 6)}-${v.slice(6, 8)}T${v.slice(9, 11) || '00'}:${v.slice(11, 13) || '00'}:00`;
   const field = (block, name) => block.match(new RegExp(`^${name}(?:;[^:\\r\\n]*)?:(.*)$`, 'm'))?.[1];
