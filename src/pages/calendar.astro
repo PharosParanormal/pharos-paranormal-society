@@ -1,0 +1,141 @@
+---
+import Layout from '../layouts/Layout.astro';
+import schedule from '../data/midnight-investigations.json';
+
+// Times in the data file are Gettysburg local time ("2026-09-26T00:30:00"),
+// so format them as-is without shifting through the build machine's timezone.
+const parse = (s: string) => {
+  const [d, t = '00:00:00'] = s.split('T');
+  const [y, mo, day] = d.split('-').map(Number);
+  const [h, mi] = t.split(':').map(Number);
+  return new Date(Date.UTC(y, mo - 1, day, h, mi));
+};
+const fmt = (date: Date, opts: Intl.DateTimeFormatOptions) =>
+  new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', ...opts }).format(date);
+const time = (date: Date) => {
+  const minutes = date.getUTCHours() * 60 + date.getUTCMinutes();
+  // Ghostly Images lists midnight starts as 11:59 PM.
+  if (minutes >= 23 * 60 + 59 || minutes === 0) return 'Midnight';
+  return fmt(date, { hour: 'numeric', minute: '2-digit' });
+};
+
+const today = new Date().toISOString().slice(0, 10);
+const events = schedule.events
+  .filter((e) => (e.end ?? e.start) >= today)
+  .map((e) => {
+    const start = parse(e.start);
+    // A 12:30 AM start on Saturday means you show up late Friday night.
+    const overnight = start.getUTCHours() < 5;
+    const night = overnight ? new Date(start.getTime() - 86400000) : start;
+    const dayName = fmt(night, { weekday: 'long' });
+    const startTime = time(start);
+    return {
+      ...e,
+      month: fmt(start, { month: 'long', year: 'numeric' }),
+      weekday: fmt(night, { weekday: 'short' }),
+      day: fmt(night, { day: 'numeric' }),
+      monthShort: fmt(night, { month: 'short' }),
+      when: overnight
+        ? `${dayName} night into ${fmt(start, { weekday: 'long', month: 'short', day: 'numeric' })}`
+        : `${dayName}${start.getUTCHours() >= 20 ? ' night' : ''}, ${fmt(start, { month: 'long', day: 'numeric' })}`,
+      // The source's end times are placeholders, so only show when it starts.
+      startsAt: startTime === 'Midnight' ? 'Starts at midnight' : `Starts ${startTime}`,
+    };
+  });
+
+const months = [...new Set(events.map((e) => e.month))].map((month) => ({
+  month,
+  events: events.filter((e) => e.month === month),
+}));
+---
+
+<Layout
+  title="Investigation Calendar"
+  description="Upcoming Midnight Investigations of the Jennie Wade House & Orphanage in Gettysburg, run by Pharos Paranormal Society and presented by Ghostly Images of Gettysburg."
+>
+  <section class="border-b border-ink/10 bg-ink text-paper">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <p class="font-heading text-sm uppercase tracking-[0.3em] text-cream">Calendar</p>
+      <h1 class="font-heading mt-4 max-w-3xl text-4xl sm:text-5xl">Midnight Investigations</h1>
+      <p class="mt-5 max-w-xl text-white/70">
+        Join us inside the Jennie Wade House &amp; Orphanage in Gettysburg for an overnight, hands-on investigation,
+        presented by Ghostly Images of Gettysburg. Spots are limited, so book through Ghostly Images using the links below.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 py-16 sm:px-6">
+    {months.length > 0 ? (
+      <div class="space-y-14">
+        {months.map(({ month, events }) => (
+          <div data-month>
+            <h2 class="font-heading border-b border-ink/10 pb-3 text-sm uppercase tracking-widest text-ink/50">{month}</h2>
+            <ul class="divide-y divide-ink/10">
+              {events.map((e) => (
+                <li data-event data-start={e.start} class="flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:gap-6">
+                  <div class="flex w-20 shrink-0 flex-col items-center bg-ink py-3 text-paper">
+                    <span class="font-heading text-xs uppercase tracking-widest text-cream">{e.weekday}</span>
+                    <span class="font-heading text-3xl leading-none">{e.day}</span>
+                    <span class="text-xs uppercase tracking-wide text-white/70">{e.monthShort}</span>
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="font-heading text-lg">{e.title}</h3>
+                    <p class="mt-1 text-sm text-ink/75">{e.when}</p>
+                    <p class="mt-1 text-sm text-ink/60">
+                      {e.startsAt}
+                      {e.cost && <> · {e.cost}</>}
+                    </p>
+                  </div>
+                  <a
+                    href={e.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="font-heading inline-block shrink-0 bg-cream px-6 py-3 text-center text-sm uppercase tracking-wide text-ink transition-colors hover:bg-cream/80"
+                  >
+                    Book &rarr;
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    ) : null}
+
+    <div id="empty-state" class:list={['text-center', months.length > 0 && 'hidden']}>
+      <h2 class="font-heading text-2xl">New dates coming soon</h2>
+      <p class="mx-auto mt-4 max-w-md text-ink/70">
+        We don't have any upcoming investigations listed right now. Check the Ghostly Images of Gettysburg schedule for the latest.
+      </p>
+    </div>
+
+    <p class="mt-14 text-center text-sm text-ink/60">
+      Dates are pulled weekly from the
+      <a href={schedule.source} target="_blank" rel="noopener noreferrer" class="underline decoration-2 underline-offset-2 hover:text-ink">
+        Ghostly Images of Gettysburg schedule</a>, which always has the most current availability.
+    </p>
+  </section>
+</Layout>
+
+<script>
+  // The page is rebuilt when the schedule changes, so hide anything that has
+  // wrapped up since the last build (6 hours after it starts, Gettysburg time).
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/New_York',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23',
+    })
+      .formatToParts(new Date())
+      .map((p) => [p.type, p.value]),
+  );
+  const now = Date.parse(`${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}:${parts.second}Z`);
+
+  document.querySelectorAll<HTMLElement>('[data-event]').forEach((el) => {
+    if (Date.parse(`${el.dataset.start}Z`) + 6 * 3600000 < now) el.remove();
+  });
+  document.querySelectorAll<HTMLElement>('[data-month]').forEach((el) => {
+    if (!el.querySelector('[data-event]')) el.remove();
+  });
+  if (!document.querySelector('[data-event]')) document.getElementById('empty-state')?.classList.remove('hidden');
+</script>
