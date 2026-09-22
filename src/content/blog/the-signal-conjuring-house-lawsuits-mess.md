@@ -3,7 +3,7 @@ title: "The Signal: The Conjuring House Lawsuits Are \"A Mess,\" Says the Judge 
 date: 2026-09-10
 author: Pharos Paranormal Society
 excerpt: "A Rhode Island judge calls the Conjuring House litigation 'a mess,' Michigan's 150-year-old Bruce Mansion reopens for tours, Cleveland ParaCon hits the 5th Street Arcade this weekend, and we take an honest look at AI creeping into the EVP booth."
-coverImage: /images/gallery/Paranormal_News_Roundup_Conjuring_House_Cleveland_Paracon.png
+coverImage: /images/blog-covers/Paranormal_News_Roundup_Conjuring_House_Cleveland_Paracon.png
 tags:
   - the-signal
   - conjuring-house
