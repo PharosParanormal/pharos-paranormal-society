@@ -6,25 +6,32 @@ const HEADERS = {
 };
 const SITE = 'https://www.gettysburgbattlefieldtours.com';
 const get = async (u) => { const r = await fetch(u, { headers: HEADERS }); return { status: r.status, text: await r.text() }; };
-const snip = (html, re, n = 8) => {
-  const out = [];
-  for (const m of html.matchAll(re)) {
-    out.push(html.slice(Math.max(0, m.index - 250), m.index + 250).replace(/\s+/g, ' '));
-    if (out.length >= n) break;
-  }
-  return out;
-};
 
 const today = new Date().toISOString().slice(0, 10);
 const list = JSON.parse((await get(`${SITE}/wp-json/tribe/events/v1/events?categories=midnight-investigation&start_date=${today}&per_page=50`)).text);
 for (const e of list.events.slice(0, 3)) {
-  console.log('\n==================', e.start_date, e.title, e.url);
-  console.log('REST keys:', Object.keys(e).join(','));
-  console.log('cost:', JSON.stringify(e.cost), 'cost_details:', JSON.stringify(e.cost_details), 'website:', e.website);
-  for (const k of Object.keys(e)) if (/ticket|stock|capacity|avail|sold|rsvp/i.test(k)) console.log('  ', k, JSON.stringify(e[k]).slice(0, 300));
-  const page = await get(e.url);
-  console.log('page status', page.status, 'length', page.text.length);
-  for (const s of snip(page.text, /sold[ -]?out|out[ -]of[ -]stock|in[ -]stock|availab|tickets? (?:left|remaining)|spots? (?:left|remaining)|add[-_ ]to[-_ ]cart|\bbook now\b|fareharbor|peek\.com|checkfront|bookeo|rezdy|xola|woocommerce|stock/gi, 25)) console.log('  >>', s);
-  const links = [...new Set([...page.text.matchAll(/href="([^"]+)"/g)].map((m) => m[1]).filter((h) => /product|book|ticket|cart|fareharbor|peek|checkfront|bookeo|rezdy|xola/i.test(h)))];
-  console.log('booking-ish links:', links.slice(0, 20));
+  console.log('\n######', e.id, e.start_date, e.title);
+
+  for (const u of [
+    `${SITE}/wp-json/tribe/tickets/v1/tickets?include_post=${e.id}`,
+    `${SITE}/wp-json/tribe/tickets/v1/tickets?event=${e.id}`,
+  ]) {
+    const r = await get(u);
+    console.log('TICKETS API', r.status, u);
+    console.log('   ', r.text.replace(/\s+/g, ' ').slice(0, 1500));
+  }
+
+  const page = (await get(e.url)).text;
+  const body = page.replace(/<head[\s\S]*?<\/head>/i, '').replace(/<style[\s\S]*?<\/style>/gi, '');
+  // Ticket form markup and embedded data
+  for (const m of body.matchAll(/<[^>]*(?:tribe-tickets|tribe-block__tickets|data-available|data-ticket|sold-out|out-of-stock|tickets-item)[^>]*>/gi)) {
+    console.log('  TAG', m[0].slice(0, 400));
+  }
+  const text = body.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+  for (const m of text.matchAll(/ticket|sold|available|remaining|capacity|stock|book/gi)) {
+    console.log('  TEXT', text.slice(Math.max(0, m.index - 120), m.index + 160));
+  }
+  for (const m of body.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi)) {
+    if (/available|capacity|stock|sold/i.test(m[1]) && /ticket/i.test(m[1])) console.log('  SCRIPT', m[1].replace(/\s+/g, ' ').slice(0, 800));
+  }
 }
