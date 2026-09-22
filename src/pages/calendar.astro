@@ -24,10 +24,11 @@ const events = schedule.events
   .filter((e) => (e.end ?? e.start) >= today)
   .map((e) => {
     const start = parse(e.start);
-    const end = e.end ? parse(e.end) : null;
     // A 12:30 AM start on Saturday means you show up late Friday night.
     const overnight = start.getUTCHours() < 5;
     const night = overnight ? new Date(start.getTime() - 86400000) : start;
+    const dayName = fmt(night, { weekday: 'long' });
+    const startTime = time(start);
     return {
       ...e,
       month: fmt(start, { month: 'long', year: 'numeric' }),
@@ -35,9 +36,10 @@ const events = schedule.events
       day: fmt(night, { day: 'numeric' }),
       monthShort: fmt(night, { month: 'short' }),
       when: overnight
-        ? `${fmt(night, { weekday: 'long' })} night into ${fmt(start, { weekday: 'long', month: 'short', day: 'numeric' })}`
-        : fmt(start, { weekday: 'long', month: 'long', day: 'numeric' }),
-      hours: end ? `${time(start)} – ${time(end)}` : time(start),
+        ? `${dayName} night into ${fmt(start, { weekday: 'long', month: 'short', day: 'numeric' })}`
+        : `${dayName}${start.getUTCHours() >= 20 ? ' night' : ''}, ${fmt(start, { month: 'long', day: 'numeric' })}`,
+      // The source's end times are placeholders, so only show when it starts.
+      startsAt: startTime === 'Midnight' ? 'Starts at midnight' : `Starts ${startTime}`,
     };
   });
 
@@ -70,7 +72,7 @@ const months = [...new Set(events.map((e) => e.month))].map((month) => ({
             <h2 class="font-heading border-b border-ink/10 pb-3 text-sm uppercase tracking-widest text-ink/50">{month}</h2>
             <ul class="divide-y divide-ink/10">
               {events.map((e) => (
-                <li data-event data-end={e.end ?? e.start} class="flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:gap-6">
+                <li data-event data-start={e.start} class="flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:gap-6">
                   <div class="flex w-20 shrink-0 flex-col items-center bg-ink py-3 text-paper">
                     <span class="font-heading text-xs uppercase tracking-widest text-cream">{e.weekday}</span>
                     <span class="font-heading text-3xl leading-none">{e.day}</span>
@@ -80,8 +82,7 @@ const months = [...new Set(events.map((e) => e.month))].map((month) => ({
                     <h3 class="font-heading text-lg">{e.title}</h3>
                     <p class="mt-1 text-sm text-ink/75">{e.when}</p>
                     <p class="mt-1 text-sm text-ink/60">
-                      {e.hours}
-                      {e.location && <> · {e.location}</>}
+                      {e.startsAt}
                       {e.cost && <> · {e.cost}</>}
                     </p>
                   </div>
@@ -118,7 +119,7 @@ const months = [...new Set(events.map((e) => e.month))].map((month) => ({
 
 <script>
   // The page is rebuilt when the schedule changes, so hide anything that has
-  // ended since the last build. Compare in Gettysburg local time.
+  // wrapped up since the last build (6 hours after it starts, Gettysburg time).
   const parts = Object.fromEntries(
     new Intl.DateTimeFormat('en-US', {
       timeZone: 'America/New_York',
@@ -128,10 +129,10 @@ const months = [...new Set(events.map((e) => e.month))].map((month) => ({
       .formatToParts(new Date())
       .map((p) => [p.type, p.value]),
   );
-  const now = `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}:${parts.second}`;
+  const now = Date.parse(`${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}:${parts.second}Z`);
 
   document.querySelectorAll<HTMLElement>('[data-event]').forEach((el) => {
-    if ((el.dataset.end ?? '') < now) el.remove();
+    if (Date.parse(`${el.dataset.start}Z`) + 6 * 3600000 < now) el.remove();
   });
   document.querySelectorAll<HTMLElement>('[data-month]').forEach((el) => {
     if (!el.querySelector('[data-event]')) el.remove();
