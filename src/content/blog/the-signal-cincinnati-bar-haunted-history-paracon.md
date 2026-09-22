@@ -3,7 +3,7 @@ title: "The Signal: Cincinnati's Oldest Bar Rents Out Its Ghosts, and a New Para
 date: 2026-09-19
 author: Pharos Paranormal Society
 excerpt: "Cincinnati's 188-year-old Arnold's Bar and Grill opens for overnight ghost hunts, a small Appalachian group keeps its fall calendar full, Haunted History Paracon opens today in Cobleskill, NY, and GhostStop ships an actual new EMF data logger."
-coverImage: /images/gallery/3C824FAD-026A-463B-8A4B-F331B339BB96.jpeg
+coverImage: /images/gallery/Paranormal_News_Roundup_Cincinnati_Paracon.png
 tags:
   - the-signal
   - haunted-locations
