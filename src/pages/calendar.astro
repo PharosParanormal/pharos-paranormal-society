@@ -15,12 +15,9 @@ const parse = (s: string) => {
 };
 const fmt = (date: Date, opts: Intl.DateTimeFormatOptions) =>
   new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', ...opts }).format(date);
-const time = (date: Date) => {
-  const minutes = date.getUTCHours() * 60 + date.getUTCMinutes();
-  // Ghostly Images lists midnight starts as 11:59 PM.
-  if (minutes >= 23 * 60 + 59 || minutes === 0) return 'Midnight';
-  return fmt(date, { hour: 'numeric', minute: '2-digit' });
-};
+// Show the exact start time (e.g. 11:59 PM) rather than "midnight", which
+// leaves people unsure which day it falls on.
+const time = (date: Date) => fmt(date, { hour: 'numeric', minute: '2-digit' });
 
 const today = new Date().toISOString().slice(0, 10);
 const events = schedule.events
@@ -31,7 +28,6 @@ const events = schedule.events
     const overnight = start.getUTCHours() < 5;
     const night = overnight ? new Date(start.getTime() - 86400000) : start;
     const dayName = fmt(night, { weekday: 'long' });
-    const startTime = time(start);
     return {
       soldOut: e.soldOut || soldOut.dates.includes(e.start.slice(0, 10)),
       ...e,
@@ -43,7 +39,7 @@ const events = schedule.events
         ? `${dayName} night into ${fmt(start, { weekday: 'long', month: 'short', day: 'numeric' })}`
         : `${dayName}${start.getUTCHours() >= 20 ? ' night' : ''}, ${fmt(start, { month: 'long', day: 'numeric' })}`,
       // The source's end times are placeholders, so only show when it starts.
-      startsAt: startTime === 'Midnight' ? 'Starts at midnight' : `Starts ${startTime}`,
+      startsAt: `Starts ${time(start)}`,
     };
   });
 
