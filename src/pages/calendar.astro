@@ -4,6 +4,9 @@ import schedule from '../data/midnight-investigations.json';
 // Sold-out status is synced from Ghostly Images' ticketing. This hand-edited list
 // (start dates, YYYY-MM-DD) can force a date to show as sold out regardless.
 import soldOut from '../data/sold-out.json';
+// Hand-added events (e.g. member events) live in their own file so the weekly
+// Ghostly Images sync never overwrites them. Their end times are real.
+import extra from '../data/events.json';
 
 // Times in the data file are Gettysburg local time ("2026-09-26T00:30:00"),
 // so format them as-is without shifting through the build machine's timezone.
@@ -20,7 +23,17 @@ const fmt = (date: Date, opts: Intl.DateTimeFormatOptions) =>
 const time = (date: Date) => fmt(date, { hour: 'numeric', minute: '2-digit' });
 
 const today = new Date().toISOString().slice(0, 10);
-const events = schedule.events
+type CalendarEvent = (typeof schedule.events)[number] & {
+  note?: string;
+  description?: string;
+  location?: string;
+  manual?: boolean;
+};
+const events = [
+  ...(schedule.events as CalendarEvent[]),
+  ...extra.events.map((e) => ({ ...e, manual: true }) as CalendarEvent),
+]
+  .sort((a, b) => a.start.localeCompare(b.start))
   .filter((e) => (e.end ?? e.start) >= today)
   .map((e) => {
     const start = parse(e.start);
@@ -38,8 +51,9 @@ const events = schedule.events
       when: overnight
         ? `${dayName} night into ${fmt(start, { weekday: 'long', month: 'short', day: 'numeric' })}`
         : `${dayName}${start.getUTCHours() >= 20 ? ' night' : ''}, ${fmt(start, { month: 'long', day: 'numeric' })}`,
-      // The source's end times are placeholders, so only show when it starts.
-      startsAt: `Starts ${time(start)}`,
+      // The synced end times are placeholders, so only show when those start.
+      startsAt:
+        e.manual && e.end ? `${time(start)} – ${time(parse(e.end))}` : `Starts ${time(start)}`,
     };
   });
 
@@ -50,16 +64,17 @@ const months = [...new Set(events.map((e) => e.month))].map((month) => ({
 ---
 
 <Layout
-  title="Investigation Calendar"
-  description="Upcoming Midnight Investigations of the Jennie Wade House & Orphanage in Gettysburg, run by Pharos Paranormal Society and presented by Ghostly Images of Gettysburg."
+  title="Event Calendar"
+  description="Upcoming Midnight Investigations of the Jennie Wade House & Orphanage in Gettysburg and other events from Pharos Paranormal Society and its members."
 >
   <section class="border-b border-ink/10 bg-ink text-paper">
     <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
       <p class="font-heading text-sm uppercase tracking-[0.3em] text-cream">Calendar</p>
-      <h1 class="font-heading mt-4 max-w-3xl text-4xl sm:text-5xl">Midnight Investigations</h1>
+      <h1 class="font-heading mt-4 max-w-3xl text-4xl sm:text-5xl">Upcoming Events</h1>
       <p class="mt-5 max-w-xl text-white/70">
-        Join us inside the Jennie Wade House &amp; Orphanage in Gettysburg for an overnight, hands-on investigation,
-        presented by Ghostly Images of Gettysburg. Spots are limited, so book through Ghostly Images using the links below.
+        Join us inside the Jennie Wade House &amp; Orphanage in Gettysburg for an overnight, hands-on Midnight Investigation,
+        presented by Ghostly Images of Gettysburg, or catch one of our members' own events. Spots are limited, so book
+        using the links below.
       </p>
     </div>
   </section>
@@ -84,12 +99,17 @@ const months = [...new Set(events.map((e) => e.month))].map((month) => ({
                     )}
                   </div>
                   <div class="flex-1">
+                    {e.note && (
+                      <p class="font-heading mb-1 text-xs uppercase tracking-widest text-red-700">{e.note}</p>
+                    )}
                     <h3 class="font-heading text-lg">{e.title}</h3>
                     <p class="mt-1 text-sm text-ink/75">{e.when}</p>
                     <p class="mt-1 text-sm text-ink/60">
                       {e.startsAt}
                       {e.cost && <> · {e.cost}</>}
                     </p>
+                    {e.manual && e.location && <p class="mt-1 text-sm text-ink/60">{e.location}</p>}
+                    {e.description && <p class="mt-2 max-w-xl text-sm text-ink/70">{e.description}</p>}
                   </div>
                   <a
                     href={e.url}
@@ -115,7 +135,7 @@ const months = [...new Set(events.map((e) => e.month))].map((month) => ({
     </div>
 
     <p class="mt-14 text-center text-sm text-ink/60">
-      Dates are pulled weekly from the
+      Midnight Investigation dates are pulled weekly from the
       <a href={schedule.source} target="_blank" rel="noopener noreferrer" class="underline decoration-2 underline-offset-2 hover:text-ink">
         Ghostly Images of Gettysburg schedule</a>, which always has the most current availability.
     </p>
