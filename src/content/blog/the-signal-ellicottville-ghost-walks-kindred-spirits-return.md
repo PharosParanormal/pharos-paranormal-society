@@ -30,7 +30,7 @@ The building's own history does a lot of the work here: it allegedly served as a
 
 Amy Bruni and Adam Berry — the same duo whose "Strange Escapes" work you'll recognize from our own homepage — are working to revive Kindred Spirits, this time on Beacon TV, a smaller streaming service built specifically around paranormal, true-crime, and horror programming rather than a traditional cable network. Bruni posted a trailer to Facebook this year teasing the reunion, and Beacon TV has been positioning itself as a home for paranormal creators who'd rather build their own platform than pitch a network.
 
-We're flagging this one honestly: as of this writing, no premiere date has been announced, and "this fall" is as specific as it's gotten. We're not going to invent a date or a season number that isn't out yet. But it's a real, concrete effort by two investigators with a long track record, on an actual named platform, not just a rumor — worth watching for an official date before we book it into a future post.
+This one's personal for us — we met Amy and Adam in person at their Strange Escapes event in Gettysburg, and we're genuinely looking forward to seeing Kindred Spirits back on screen. No exact premiere date has been announced yet — "this fall" is as specific as it's gotten — but this is a real, concrete effort from two investigators we can vouch for firsthand, on an actual named platform.
 
 ## Gear Trends: Influencer-Branded Ghost Hunting Devices Are Their Own Small Category Now
 
