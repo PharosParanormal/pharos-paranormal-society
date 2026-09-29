@@ -3,7 +3,7 @@ title: "The Signal: An Upstate NY Ghost Walk Revives, a Tavern's Jail-Yard Histo
 date: 2026-09-29
 author: Pharos Paranormal Society
 excerpt: "Ellicottville, NY brings back its historical society ghost walks with a Spirit Box moment worth repeating, an Asheville tavern's old-jail history gets its own paranormal documentary, and Amy Bruni and Adam Berry try to revive Kindred Spirits on a new streaming service."
-coverImage: /images/blog-covers/Paranormal_News_Roundup_Ellicottville_Kindred_Spirits.png
+coverImage: /images/blog-covers/Paranormal_News_This_Week_Ellicottville_Kindred_Spirits.png
 tags:
   - the-signal
   - haunted-locations
