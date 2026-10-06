@@ -2,7 +2,7 @@
 title: "The Signal: 25 Officially Haunted Hotels, a Parapsychology Symposium in Halifax, and a Ghost Con in Wales"
 date: 2026-10-06
 author: Pharos Paranormal Society
-coverImage: /images/blog-covers/Paranormal_News_Roundup_Haunted_Hotels_Halifax_Wales.png
+coverImage: /images/blog-covers/This_Week_In_The_Paranormal_Haunted_Hotels_Halifax_Wales.png
 excerpt: "Historic Hotels of America puts an official seal on 25 haunted properties for 2026, Nova Scotia's paranormal symposium leans into real parapsychology research, and Wales gets its own ghost convention headlined by a Most Haunted veteran."
 tags:
   - the-signal
