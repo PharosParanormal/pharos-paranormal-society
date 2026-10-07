@@ -82,6 +82,10 @@ The `/calendar` page lists upcoming Midnight Investigations from the [Ghostly Im
 
 Sold-out dates are detected automatically: the sync checks Ghostly Images' ticket system, and when a date has no seats left it gets a red **Sold Out** ribbon across it and its **Book** button becomes **Details** (still linking to the event page). If a date opens back up, the ribbon comes off on the next sync. To force a date to show as sold out anyway, add its start date (`YYYY-MM-DD`) to `dates` in `src/data/sold-out.json`; the sync never changes that file.
 
+### Trading card pages
+
+`cards/` is a separate, self-contained static site for the hidden QR trading-card pages (`cards.pharosparanormal.com`). It has its own build, its own Netlify site, and its own [README](cards/README.md). Its card list and media stay off GitHub on purpose.
+
 ### Contact
 
 The `/contact` page points visitors straight at a `mailto:` link built from `site-settings.email`, rather than an on-site form — simplest possible setup, no Netlify Forms configuration needed.

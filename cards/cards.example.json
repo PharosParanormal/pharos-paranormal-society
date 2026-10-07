@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Card 1",
+    "type": "audio",
+    "source": "media/MommyEVPClip.mp3",
+    "caption": "Placeholder caption: describe where and when this EVP was captured.",
+    "transcript": ""
+  },
+  {
+    "title": "Card 2 (Placeholder)",
+    "type": "video",
+    "source": "media/placeholder-video.mp4",
+    "poster": "media/placeholder-poster.jpg",
+    "caption": "Sample video card. Replace or delete this entry before you print.",
+    "transcript": "This is a sample transcript. Keep it short, or leave it empty to hide the transcript toggle."
+  }
+]

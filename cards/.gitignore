@@ -1,0 +1,10 @@
+# This repository is PUBLIC. Anything below would reveal the hidden card URLs
+# or the media itself, so it stays on your computer only. Back up cards.json!
+cards.json
+media/
+dist/
+qr/
+qr-preview/
+cards-urls.csv
+node_modules/
+*.zip
