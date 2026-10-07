@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="EVP Recording" description="An EVP captured by Pharos Paranormal Society." noindex>
+  <section class="flex min-h-[70vh] items-center bg-ink text-paper">
+    <div class="mx-auto w-full max-w-2xl px-4 py-20 text-center sm:px-6">
+      <p class="font-heading text-sm uppercase tracking-[0.3em] text-cream">Evidence</p>
+      <h1 class="font-heading mt-4 text-4xl sm:text-5xl">Listen closely</h1>
+      <p class="mx-auto mt-5 max-w-md text-white/70">
+        This EVP was captured during one of our investigations. Turn up the volume or put on headphones.
+      </p>
+      <audio class="mx-auto mt-10 w-full max-w-md" controls preload="metadata" src="/audio/mommy-evp.mp3">
+        Your browser can't play this audio. <a class="underline" href="/audio/mommy-evp.mp3">Download the clip</a>.
+      </audio>
+    </div>
+  </section>
+</Layout>

@@ -6,9 +6,10 @@ import { getCollection } from 'astro:content';
 interface Props {
   title: string;
   description?: string;
+  noindex?: boolean;
 }
 
-const { title, description = 'Pharos Paranormal Society — paranormal investigation, grounded in evidence.' } = Astro.props;
+const { title, noindex = false, description = 'Pharos Paranormal Society — paranormal investigation, grounded in evidence.' } = Astro.props;
 
 const settingsEntries = await getCollection('site-settings');
 const settings = settingsEntries[0]?.data;
@@ -22,6 +23,7 @@ const settings = settingsEntries[0]?.data;
     <link rel="icon" type="image/png" href="/images/logo.png" />
     <title>{title} · Pharos Paranormal Society</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
