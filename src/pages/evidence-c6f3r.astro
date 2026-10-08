@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Cat Ball Evidence" description="Cat ball evidence captured by Pharos Paranormal Society." noindex>
+  <section class="flex min-h-[70vh] items-center bg-ink text-paper">
+    <div class="mx-auto w-full max-w-2xl px-4 py-20 text-center sm:px-6">
+      <p class="font-heading text-sm uppercase tracking-[0.3em] text-cream">Evidence</p>
+      <h1 class="font-heading mt-4 text-4xl sm:text-5xl">Watch closely</h1>
+      <p class="mx-auto mt-5 max-w-md text-white/70">
+        This footage was captured during one of our investigations. Turn the sound on and keep your eyes open.
+      </p>
+      <div class="mx-auto mt-8 max-w-md rounded-lg border border-cream/40 px-5 py-4 text-left">
+        <p class="font-heading text-xs uppercase tracking-widest text-cream">What to watch for</p>
+        <p class="mt-2 text-white/80">
+          Keep your eyes on the <span class="font-semibold text-paper">cat ball</span>, the small red light by the stairs.
+          Cat balls are toys that light up when they're touched or moved.
+        </p>
+      </div>
+      <video
+        class="mx-auto mt-10 max-h-[75vh] w-auto max-w-full rounded-lg bg-black"
+        controls
+        playsinline
+        preload="metadata"
+        src="/video/evidence-c6f3r.mp4"
+      >
+        Your browser can't play this video. <a class="underline" href="/video/evidence-c6f3r.mp4">Download the clip</a>.
+      </video>
+    </div>
+  </section>
+</Layout>
