@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="SLS Camera Evidence" description="SLS camera evidence captured by Pharos Paranormal Society." noindex>
+  <section class="flex min-h-[70vh] items-center bg-ink text-paper">
+    <div class="mx-auto w-full max-w-2xl px-4 py-20 text-center sm:px-6">
+      <p class="font-heading text-sm uppercase tracking-[0.3em] text-cream">Evidence</p>
+      <h1 class="font-heading mt-4 text-4xl sm:text-5xl">Watch closely</h1>
+      <p class="mx-auto mt-5 max-w-md text-white/70">
+        This footage was captured during one of our investigations. Keep an eye on the SLS camera screen and turn the sound on.
+      </p>
+      <div class="mx-auto mt-8 max-w-md rounded-lg border border-cream/40 px-5 py-4 text-left">
+        <p class="font-heading text-xs uppercase tracking-widest text-cream">What is an SLS camera?</p>
+        <p class="mt-2 text-white/80">
+          An SLS (<span class="font-semibold text-paper">Structured Light Sensor</span>) camera is a ghost-hunting tool that
+          uses infrared depth mapping to detect and display humanoid shapes in 3D, often revealing "stick figures" in empty rooms.
+        </p>
+      </div>
+      <video
+        class="mx-auto mt-10 max-h-[75vh] w-auto max-w-full rounded-lg bg-black"
+        controls
+        playsinline
+        preload="metadata"
+        src="/video/sls-camera.mp4"
+      >
+        Your browser can't play this video. <a class="underline" href="/video/sls-camera.mp4">Download the clip</a>.
+      </video>
+    </div>
+  </section>
+</Layout>
