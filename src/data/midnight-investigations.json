@@ -1,7 +1,7 @@
 {
   "source": "https://www.gettysburgbattlefieldtours.com/events/category/ghost-tours/midnight-investigation/",
   "timezone": "America/New_York",
-  "updatedAt": "2026-10-04T15:12:04.288Z",
+  "updatedAt": "2026-10-20T14:51:33.465Z",
   "events": [
     {
       "title": "Midnight Investigation (Combo)",
@@ -28,6 +28,15 @@
       "cost": null,
       "location": "Gettysburg Tours Inc.",
       "url": "https://www.gettysburgbattlefieldtours.com/event/midnight-investigation-jennie-wade-house-2611212345/",
+      "soldOut": false
+    },
+    {
+      "title": "Midnight Investigation (Jennie Wade House)",
+      "start": "2027-03-13T22:45:00",
+      "end": "2027-03-13T22:59:00",
+      "cost": null,
+      "location": "Gettysburg Tours Inc.",
+      "url": "https://www.gettysburgbattlefieldtours.com/event/midnight-investigation-jennie-wade-house-2703132245/",
       "soldOut": false
     }
   ]
