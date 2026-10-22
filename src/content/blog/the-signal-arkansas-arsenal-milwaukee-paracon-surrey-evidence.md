@@ -2,6 +2,7 @@
 title: "The Signal: A Civil War Arsenal's Ghostly 'Get Out,' Milwaukee's ParaCon Turns 11, and a B.C. Team Opens Up 16 Years of Evidence"
 date: 2026-10-20
 author: Pharos Paranormal Society
+coverImage: /images/blog-covers/Paranormal_News_This_Week_Arkansas_Arsenal_Milwaukee_BC.webp
 excerpt: "A historic Little Rock arsenal tower yields an EVP telling investigators to leave, Milwaukee's long-running paranormal conference packs a beer hall for its 11th year, and a British Columbia team shares over a decade and a half of case evidence at a fundraiser for a 110-year-old camp."
 tags:
   - the-signal
