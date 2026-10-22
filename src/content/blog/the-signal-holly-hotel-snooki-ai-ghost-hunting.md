@@ -2,6 +2,7 @@
 title: "The Signal: A Haunted Hotel's Courtroom Drama, Snooki's Ghost-Hunting Debut, and AI Comes for Paranormal Investigation"
 date: 2026-10-13
 author: Pharos Paranormal Society
+coverImage: /images/blog-covers/Paranormal_News_This_Week_Holly_Hotel_Snooki_AI.webp
 excerpt: "A famously haunted Michigan hotel stays closed as a judge-disqualification fight pushes its property-line lawsuit to a December retrial, a Jersey Shore alum becomes the newest celebrity ghost hunter in a new Crave series, and a science outlet takes a clear-eyed look at how AI is actually creeping into the field."
 tags:
   - the-signal
