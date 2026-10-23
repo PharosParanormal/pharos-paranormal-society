@@ -1,7 +1,7 @@
 {
   "source": "https://www.gettysburgbattlefieldtours.com/events/category/ghost-tours/midnight-investigation/",
   "timezone": "America/New_York",
-  "updatedAt": "2026-10-20T14:51:33.465Z",
+  "updatedAt": "2026-10-23T14:47:49.424Z",
   "events": [
     {
       "title": "Midnight Investigation (Combo)",
@@ -19,7 +19,7 @@
       "cost": null,
       "location": "Gettysburg Tours Inc.",
       "url": "https://www.gettysburgbattlefieldtours.com/event/midnight-investigation-orphanage-2611072359/",
-      "soldOut": false
+      "soldOut": true
     },
     {
       "title": "Midnight Investigation (Jennie Wade House)",
