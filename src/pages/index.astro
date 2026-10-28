@@ -187,8 +187,30 @@ const latestPost = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.v
     <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
       <p class="font-heading text-sm uppercase tracking-widest text-ink/50">From the field</p>
       <h2 class="font-heading mt-3 text-3xl">Latest from the blog</h2>
-      <div class="mt-10 max-w-md">
-        <BlogCard post={latestPost} />
+      <div class="mt-10 grid gap-12 sm:grid-cols-2 sm:items-start">
+        <div class="max-w-md">
+          <BlogCard post={latestPost} />
+        </div>
+        <div class="w-full">
+          <div class="aspect-video w-full overflow-hidden border border-ink/10 bg-ink">
+            <iframe
+              src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2185598902354765&show_text=false"
+              title="abc27 news segment in Gettysburg on Facebook"
+              class="h-full w-full"
+              loading="lazy"
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <a
+            href="https://www.facebook.com/reel/2185598902354765"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-heading mt-4 inline-block text-sm uppercase tracking-wide underline decoration-cream decoration-2 underline-offset-4"
+          >
+            Watch on Facebook
+          </a>
+        </div>
       </div>
     </section>
   )}
