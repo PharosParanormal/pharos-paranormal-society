@@ -13,33 +13,45 @@ const products = [
     subtitle: 'What We Found at the Haunted Orphanage and Jennie Wade House',
     author: 'Nicole Smith-Merry, MS, LPC, NCC',
     image: '/images/merch/The_Bright_Light_Nicole_Smith-Merry.jpg',
+    imageAlt: 'The Bright Light book cover',
     description:
       "Our own Nicole takes you inside two of Gettysburg's most famous haunted sites, the National Soldiers' Orphans Homestead and the Jennie Wade House, and shares what she found there.",
     href: 'https://a.co/d/0hC3Ri4W',
     cta: 'Buy on Amazon',
   },
+  {
+    category: 'Sticker',
+    title: 'Pharos Logo Sticker',
+    subtitle: 'Our lighthouse logo, ready for your laptop, water bottle, or gear case',
+    image: '/images/logo.png',
+    imageAlt: 'Pharos Paranormal Society lighthouse logo sticker',
+    description:
+      'Show your Pharos pride with a sticker of our lighthouse logo, ghost in the lantern room and all. Printed and shipped by Sticker Mule.',
+    href: 'https://www.stickermule.com/calimorecreations/item/21077655?origin=PUBLIC_PROFILE',
+    cta: 'Buy on Sticker Mule',
+  },
 ];
 ---
 
-<Layout title="Merch" description="Shop Pharos Paranormal Society merch, including The Bright Light by team member Nicole Smith-Merry.">
+<Layout title="Merch" description="Shop Pharos Paranormal Society merch, including The Bright Light by team member Nicole Smith-Merry and our logo sticker.">
   <section class="border-b border-ink/10 bg-ink text-paper">
     <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
       <p class="font-heading text-sm uppercase tracking-[0.3em] text-cream">Merch</p>
       <h1 class="font-heading mt-4 max-w-2xl text-4xl sm:text-5xl">The Pharos shop</h1>
       <p class="mt-5 max-w-xl text-white/70">
-        Books, gear, and more from the Pharos Paranormal Society team. We're starting with a book from one of our own, and tees and hats are on the way.
+        Books, gear, and more from the Pharos Paranormal Society team. We're starting with a book from one of our own and our logo sticker, and tees and hats are on the way.
       </p>
     </div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+  <section class="mx-auto max-w-6xl space-y-10 px-4 py-20 sm:px-6">
     {products.map((product) => (
       <article class="grid items-center gap-10 border border-ink/10 bg-paper p-6 sm:p-10 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
         <a href={product.href} target="_blank" rel="noopener noreferrer" class="mx-auto block w-full max-w-xs">
           <img
             src={product.image}
-            alt={`${product.title} book cover`}
-            class="w-full shadow-xl transition-transform duration-300 hover:scale-[1.02]"
+            alt={product.imageAlt}
+            class="w-full border border-ink/10 shadow-xl transition-transform duration-300 hover:scale-[1.02]"
             loading="lazy"
           />
         </a>
@@ -47,7 +59,7 @@ const products = [
           <p class="font-heading text-sm uppercase tracking-widest text-ink/50">{product.category}</p>
           <h2 class="font-heading mt-3 text-3xl sm:text-4xl">{product.title}</h2>
           <p class="mt-2 text-lg text-ink/80">{product.subtitle}</p>
-          <p class="mt-4 text-sm uppercase tracking-wide text-ink/60">By {product.author}</p>
+          {product.author && <p class="mt-4 text-sm uppercase tracking-wide text-ink/60">By {product.author}</p>}
           <p class="mt-6 max-w-xl text-ink/70">{product.description}</p>
           <a
             href={product.href}
