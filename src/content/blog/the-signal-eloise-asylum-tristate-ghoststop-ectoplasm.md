@@ -2,6 +2,7 @@
 title: "The Signal: An Asylum and a Funeral Home Cash In on Ghost Tourism, a Tri-State News Team Wraps Its Haunted Season, and GhostStop Goes Full Ectoplasm"
 date: 2026-10-27
 author: Pharos Paranormal Society
+coverImage: /images/blog-covers/Paranormal_News_This_Week_Eloise_TriState_GhostStop.webp
 excerpt: "An AP feature follows paying ghost hunters into a former Michigan psychiatric hospital and an Ohio funeral-home-turned-overnight-stay, a Hudson Valley news station closes out a month of its own 'Haunted Tri-State' segments, and GhostStop dresses its Ovilus 5 up like the Ectomobile."
 tags:
   - the-signal
