@@ -2,6 +2,7 @@
 title: "The Signal: A WWII Airman Still Walks a Working Air Base, and a Hotel Ghost Hunter Finds Baltimore's Hidden Room"
 date: 2026-11-03
 author: Pharos Paranormal Society
+coverImage: /images/blog-covers/Paranormal_News_This_Week_Lakenheath_Lord_Baltimore.webp
 excerpt: "A Stars and Stripes investigation traces eight decades of ghost reports at RAF Lakenheath, an active U.S. Air Force base in England, while a Baltimore TV station's own overnight hunt at the historic Lord Baltimore Hotel turns up a hidden room that isn't on the tour."
 tags:
   - the-signal
