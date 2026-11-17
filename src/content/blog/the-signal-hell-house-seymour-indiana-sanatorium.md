@@ -2,6 +2,7 @@
 title: "The Signal: A Comedian Buys Connecticut's 'Hell House,' and an Indiana Sanatorium's Shadow Hallway Gets a Closer Look"
 date: 2026-11-10
 author: Pharos Paranormal Society
+coverImage: /images/blog-covers/Paranormal_News_This_Week_Hell_House_Indiana_Sanatorium.webp
 excerpt: "A comedian and a paranormal YouTuber turn a Connecticut house once investigated by Ed and Lorraine Warren into an overnight stay for ghost hunters, an Indiana news crew walks the 'Shadow Hallway' of a former tuberculosis sanatorium, and a new mechanical trigger object brings the metronome back to the field kit."
 tags:
   - the-signal
