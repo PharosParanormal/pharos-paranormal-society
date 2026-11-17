@@ -2,6 +2,7 @@
 title: "The Signal: The Lizzie Borden Trademark Fight Rolls Into Year Four, and Ghost Adventures Wraps Season 31"
 date: 2026-11-17
 author: Pharos Paranormal Society
+coverImage: /images/blog-covers/Paranormal_News_This_Week_Lizzie_Borden_Ghost_Adventures.webp
 excerpt: "A Massachusetts federal judge hands down a new ruling in the years-long trademark fight between the Lizzie Borden House and the coffee shop next door, Zak Bagans and the Ghost Adventures crew close out Season 31 in Nevada, and a new ghost box claims it can't just make words up."
 tags:
   - the-signal
