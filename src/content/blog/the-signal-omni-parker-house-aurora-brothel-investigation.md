@@ -2,6 +2,7 @@
 title: "The Signal: Boston's Most Storied Hotel Confronts Its Ghosts, and a Missouri Brothel Gets an Overnight Investigation"
 date: 2026-11-24
 author: Pharos Paranormal Society
+coverImage: /images/blog-covers/Paranormal_News_This_Week_Omni_Parker_Aurora_Brothel.webp
 excerpt: "A student-newspaper feature digs into generations of ghost stories at Boston's historic Omni Parker House, a Missouri news crew spends seven hours inside a 19th-century brothel-turned-antique-shop with a paranormal investigator, and an honest look at a motion-and-temperature trigger device that's been quietly on the market longer than its 'new' label suggests."
 tags:
   - the-signal
